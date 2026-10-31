@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,12 +9,135 @@
       content="TaskFlow - Your personal productivity workspace"
     />
 
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="/src/styles/variables.css" />
+    <link rel="stylesheet" href="/src/styles/themes.css" />
+    <link rel="stylesheet" href="/src/styles/main.css" />
+    <link rel="stylesheet" href="/src/styles/responsive.css" />
+    <link rel="stylesheet" href="/src/styles/layout.css" />
     <title>TaskFlow | Productivity Workspace</title>
   </head>
+
   <body>
     <div id="app">
-      <h1>TaskFlow</h1>
-      <p>Your productivity journey starts here.</p>
+      <!-- SIDEBAR -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <h2 class="sidebar-logo">TaskFlow</h2>
+
+          <button
+            class="sidebar-toggle"
+            id="sidebarToggle"
+            aria-label="Toggle sidebar"
+          >
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a href="#" class="nav-link active">
+            <i class="fa-solid fa-house"></i>
+            <span>Dashboard</span>
+          </a>
+
+          <a href="#" class="nav-link">
+            <i class="fa-solid fa-list-check"></i>
+            <span>Tasks</span>
+          </a>
+
+          <a href="#" class="nav-link">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span>Calendar</span>
+          </a>
+
+          <a href="#" class="nav-link">
+            <i class="fa-solid fa-bullseye"></i>
+            <span>Goals</span>
+          </a>
+
+          <a href="#" class="nav-link">
+            <i class="fa-solid fa-stopwatch"></i>
+            <span>Focus Timer</span>
+          </a>
+
+          <a href="#" class="nav-link">
+            <i class="fa-solid fa-repeat"></i>
+            <span>Habits</span>
+          </a>
+
+          <a href="#" class="nav-link">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Statistics</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <a href="#" class="nav-link">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+          </a>
+        </div>
+      </aside>
+
+      <!-- MAIN AREA -->
+      <div class="main-layout">
+        <!-- TOPBAR -->
+        <header class="topbar">
+          <div class="topbar-left">
+            <button
+              class="mobile-menu-btn"
+              id="mobileMenuBtn"
+              aria-label="Open sidebar"
+            >
+              <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="page-heading">
+              <h2>Dashboard</h2>
+              <p>Welcome back! Let's be productive today.</p>
+            </div>
+          </div>
+
+          <div class="topbar-right">
+            <div class="current-date" id="currentDate">
+              <!-- Date will be added with JavaScript -->
+            </div>
+
+            <button
+              class="theme-toggle"
+              id="themeToggle"
+              aria-label="Change theme"
+            >
+              <i class="fa-solid fa-moon"></i>
+            </button>
+
+            <button class="notification-btn" aria-label="Notifications">
+              <i class="fa-regular fa-bell"></i>
+            </button>
+
+            <div class="user-profile">
+              <div class="user-avatar">
+                <i class="fa-solid fa-user"></i>
+              </div>
+
+              <div class="user-info">
+                <span class="user-name">My Account</span>
+                <small>Welcome</small>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+          <h1>Dashboard</h1>
+          <p>Welcome to TaskFlow!</p>
+        </main>
+      </div>
     </div>
 
     <script type="module" src="/src/main.js"></script>

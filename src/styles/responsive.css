@@ -1,0 +1,35 @@
+/* TABLET RESPONSIVE */
+
+@media (max-width: 1024px) {
+
+    .main-content {
+        padding: 20px;
+    }
+
+}
+
+
+/* MOBILE RESPONSIVE */
+
+@media (max-width: 768px) {
+
+    .main-layout {
+        flex-direction: column;
+    }
+
+    .main-content {
+        padding: 16px;
+    }
+
+}
+
+
+/* SMALL MOBILE RESPONSIVE */
+
+@media (max-width: 480px) {
+
+    .main-content {
+        padding: 12px;
+    }
+
+}

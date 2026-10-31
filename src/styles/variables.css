@@ -1,0 +1,30 @@
+
+:root {
+    /* Brand Colors */
+    --primary-color: #8b5cf6;
+    --primary-hover: #7c3aed;
+
+    /* Background Colors */
+    /* --bg-color: #111827; */
+    /* --surface-color: #1f2937; */
+
+    /* Text Colors */
+    /* --text-color: #f9fafb; */
+    /* --muted-text: #9ca3af; */
+
+    /* Border */
+    /* --border-color: #374151; */
+
+    /* Status Colors */
+    --success-color: #22c55e;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+
+    /* Transitions */
+    --transition: 0.3s ease;
+}

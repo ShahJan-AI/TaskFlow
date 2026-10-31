@@ -1,0 +1,250 @@
+
+/* MAIN APP LAYOUT */
+
+#app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+
+/* MAIN LAYOUT */
+
+.main-layout {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    min-height: 100vh;
+}
+
+/* MAIN CONTENT */
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+    padding: 24px;
+}
+
+
+   /* SIDEBAR */
+
+.sidebar {
+    width: 260px;
+    min-height: 100vh;
+    background-color: var(--surface-color);
+    border-right: 1px solid var(--border-color);
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px 14px;
+
+    transition: width var(--transition);
+}
+
+/* SIDEBAR HEADER */
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 35px;
+    padding: 0 8px;
+}
+
+.sidebar-logo {
+    color: var(--primary-color);
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* SIDEBAR TOGGLE BUTTON */
+
+.sidebar-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 20px;
+    padding: 6px;
+}
+
+/* SIDEBAR NAVIGATION */
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* NAVIGATION LINKS */
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 12px;
+    border-radius: var(--radius-md);
+
+    color: var(--muted-text);
+    font-size: 14px;
+
+    transition:
+        background-color var(--transition),
+        color var(--transition);
+}
+
+.nav-link i {
+    width: 20px;
+    font-size: 17px;
+    text-align: center;
+}
+
+/* HOVER EFFECT */
+
+.nav-link:hover {
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+}
+
+/* ACTIVE LINK */
+
+.nav-link.active {
+    background-color: var(--primary-color);
+    color: #ffffff;
+}
+
+/* SIDEBAR BOTTOM */
+
+.sidebar-bottom {
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+
+
+/* ================================
+   TOPBAR
+================================ */
+
+.topbar {
+    min-height: 85px;
+    padding: 15px 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    background-color: var(--surface-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* TOPBAR LEFT */
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.page-heading h2 {
+    font-size: 22px;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+.page-heading p {
+    font-size: 13px;
+    color: var(--muted-text);
+}
+
+/* TOPBAR RIGHT */
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* CURRENT DATE */
+
+.current-date {
+    font-size: 13px;
+    color: var(--muted-text);
+}
+
+/* TOPBAR BUTTONS */
+
+.theme-toggle,
+.notification-btn,
+.mobile-menu-btn {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--bg-color);
+    color: var(--text-color);
+
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+
+    font-size: 16px;
+    transition: var(--transition);
+}
+
+.theme-toggle:hover,
+.notification-btn:hover,
+.mobile-menu-btn:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* USER PROFILE */
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--primary-color);
+    color: #ffffff;
+
+    border-radius: 50%;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.user-name {
+    color: var(--text-color);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.user-info small {
+    color: var(--muted-text);
+    font-size: 11px;
+}
+
+/* MOBILE MENU BUTTON */
+
+.mobile-menu-btn {
+    display: none;
+}
