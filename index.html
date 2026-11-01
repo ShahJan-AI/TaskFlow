@@ -17,8 +17,8 @@
     <link rel="stylesheet" href="/src/styles/variables.css" />
     <link rel="stylesheet" href="/src/styles/themes.css" />
     <link rel="stylesheet" href="/src/styles/main.css" />
-    <link rel="stylesheet" href="/src/styles/responsive.css" />
     <link rel="stylesheet" href="/src/styles/layout.css" />
+    <link rel="stylesheet" href="/src/styles/responsive.css" />
     <title>TaskFlow | Productivity Workspace</title>
   </head>
 
@@ -27,8 +27,6 @@
       <!-- SIDEBAR -->
       <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
-          <h2 class="sidebar-logo">TaskFlow</h2>
-
           <button
             class="sidebar-toggle"
             id="sidebarToggle"
@@ -36,6 +34,8 @@
           >
             <i class="fa-solid fa-bars"></i>
           </button>
+
+          <h2 class="sidebar-logo">TaskFlow</h2>
         </div>
 
         <nav class="sidebar-nav">
@@ -134,9 +134,67 @@
         </header>
 
         <!-- MAIN CONTENT -->
+
+        <!-- MAIN CONTENT -->
         <main class="main-content">
-          <h1>Dashboard</h1>
-          <p>Welcome to TaskFlow!</p>
+          <!-- DASHBOARD HEADER -->
+          <section class="dashboard-header">
+            <div>
+              <h1>Dashboard Overview</h1>
+              <p>Here is your productivity summary for today.</p>
+            </div>
+          </section>
+
+          <!-- STATISTICS CARDS -->
+          <section class="stats-grid">
+            <!-- TOTAL TASKS -->
+            <div class="stat-card">
+              <div class="stat-info">
+                <p>Total Tasks</p>
+                <h2 id="totalTasks">10</h2>
+                <span>Tasks planned for today</span>
+              </div>
+              <div class="stat-icon purple">
+                <i class="fa-solid fa-list-check"></i>
+              </div>
+            </div>
+
+            <!-- COMPLETED TASKS -->
+            <div class="stat-card">
+              <div class="stat-info">
+                <p>Completed Tasks</p>
+                <h2 id="completedTasks">0</h2>
+                <span>Tasks completed today</span>
+              </div>
+              <div class="stat-icon green">
+                <i class="fa-solid fa-check"></i>
+              </div>
+            </div>
+
+            <!-- PENDING TASKS -->
+            <div class="stat-card">
+              <div class="stat-info">
+                <p>Pending Tasks</p>
+                <h2 id="pendingTasks">10</h2>
+                <span>Tasks waiting to be done</span>
+              </div>
+              <div class="stat-icon orange">
+                <i class="fa-solid fa-clock"></i>
+              </div>
+            </div>
+
+            <!-- FOCUS TIME -->
+            <div class="stat-card">
+              <div class="stat-info">
+                <p>Focus Time</p>
+                <h2 id="focusTime">0h 00m</h2>
+                <span>Total focus time today</span>
+              </div>
+              <div class="stat-icon pink">
+                <i class="fa-solid fa-stopwatch"></i>
+              </div>
+            </div>
+          </section>
         </main>
       </div>
     </div>
