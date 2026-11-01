@@ -248,3 +248,37 @@
 .mobile-menu-btn {
     display: none;
 }
+
+/* ================================
+   COLLAPSED SIDEBAR
+================================ */
+
+.sidebar.collapsed {
+    width: 80px;
+}
+
+.sidebar.collapsed .sidebar-logo,
+.sidebar.collapsed .nav-link span {
+    display: none;
+}
+
+.sidebar.collapsed .sidebar-header {
+    justify-content: center;
+}
+
+.sidebar.collapsed .nav-link {
+    justify-content: center;
+}
+
+.sidebar.collapsed .nav-link i {
+    margin: 0;
+}
+
+
+/* ================================
+   SIDEBAR OVERLAY
+================================ */
+
+.sidebar-overlay {
+    display: none;
+}
