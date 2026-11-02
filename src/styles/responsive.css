@@ -136,3 +136,25 @@
         font-size: 24px;
     }
 }
+
+
+
+/* TASK FORM RESPONSIVE */
+
+@media (max-width: 600px) {
+
+    .add-task-section {
+        padding: 16px;
+    }
+
+    .task-options {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .add-task-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+}
