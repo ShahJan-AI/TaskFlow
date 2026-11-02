@@ -38,8 +38,6 @@
             <i class="fa-solid fa-bars"></i>
           </button>
           <h2 class="sidebar-logo">TaskFlow</h2>
-
-          
         </div>
 
         <nav class="sidebar-nav">
@@ -212,9 +210,43 @@
               <p id="taskCount">0 tasks added</p>
             </div>
 
-            <div class="task-list" id="taskList">
-              <!-- Tasks will be displayed here -->
+            <!-- TASK FILTERS -->
+            <div class="task-filters">
+              <!-- STATUS FILTER -->
+              <div class="filter-group">
+                <label for="statusFilter">Status</label>
+
+                <select id="statusFilter">
+                  <option value="all">All Tasks</option>
+                  <option value="pending">Pending</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </div>
+
+              <!-- SORT FILTER -->
+              <div class="filter-group">
+                <label for="sortFilter">Sort By</label>
+
+                <select id="sortFilter">
+                  <option value="date">Due Date</option>
+                  <option value="newest">Newest</option>
+                  <option value="oldest">Oldest</option>
+                  <option value="priority">Priority</option>
+                </select>
+              </div>
+
+              <!-- DATE GROUPING -->
+              <div class="filter-group">
+                <label for="groupFilter">Group By</label>
+
+                <select id="groupFilter">
+                  <option value="period">Date Period</option>
+                  <option value="none">No Grouping</option>
+                </select>
+              </div>
             </div>
+
+            <div class="task-list" id="taskList"></div>
 
             <p class="empty-tasks" id="emptyTasks">
               No tasks yet. Add your first task!
