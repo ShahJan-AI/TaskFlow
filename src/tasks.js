@@ -94,6 +94,11 @@ taskForm.addEventListener("submit", (event) => {
     priority: priority,
     completed: false,
     createdAt: new Date().toISOString(),
+
+    // Calendar fields
+    startAt: null,
+    endAt: null,
+    reminderMinutes: null,
   };
 
   // Add task to array
@@ -147,86 +152,75 @@ function getWeekEnd(todayString) {
   return addDays(todayString, 6 - daysSinceSaturday);
 }
 
-
 // =================================
 // FILTER AND SORT TASKS
 // =================================
 
 function getFilteredTasks() {
+  const status = statusFilter.value;
+  const sortBy = sortFilter.value;
 
-    const status = statusFilter.value;
-    const sortBy = sortFilter.value;
+  // Filter by status
+  let filteredTasks = tasks.filter((task) => {
+    if (status === "pending") {
+      return !task.completed;
+    }
 
-    // Filter by status
-    let filteredTasks = tasks.filter(task => {
+    if (status === "completed") {
+      return task.completed;
+    }
 
-        if (status === "pending") {
-            return !task.completed;
-        }
+    return true;
+  });
 
-        if (status === "completed") {
-            return task.completed;
-        }
+  // Keep original position for stable sorting
+  const indexedTasks = filteredTasks.map((task, index) => ({
+    task,
+    index,
+  }));
 
-        return true;
-    });
+  // Sort tasks
+  indexedTasks.sort((a, b) => {
+    const taskA = a.task;
+    const taskB = b.task;
 
-    // Keep original position for stable sorting
-    const indexedTasks = filteredTasks.map((task, index) => ({
-        task,
-        index
-    }));
+    if (sortBy === "date") {
+      return taskA.dueDate.localeCompare(taskB.dueDate) || a.index - b.index;
+    }
 
-    // Sort tasks
-    indexedTasks.sort((a, b) => {
+    if (sortBy === "newest" || sortBy === "oldest") {
+      const timeA = taskA.createdAt
+        ? new Date(taskA.createdAt).getTime() || 0
+        : 0;
 
-        const taskA = a.task;
-        const taskB = b.task;
+      const timeB = taskB.createdAt
+        ? new Date(taskB.createdAt).getTime() || 0
+        : 0;
 
-        if (sortBy === "date") {
-            return (
-                taskA.dueDate.localeCompare(taskB.dueDate) ||
-                a.index - b.index
-            );
-        }
+      const difference = timeA - timeB;
 
-        if (sortBy === "newest" || sortBy === "oldest") {
+      return sortBy === "newest"
+        ? -difference || a.index - b.index
+        : difference || a.index - b.index;
+    }
 
-            const timeA = taskA.createdAt
-                ? new Date(taskA.createdAt).getTime() || 0
-                : 0;
+    if (sortBy === "priority") {
+      const priorityOrder = {
+        high: 1,
+        medium: 2,
+        low: 3,
+      };
 
-            const timeB = taskB.createdAt
-                ? new Date(taskB.createdAt).getTime() || 0
-                : 0;
+      return (
+        (priorityOrder[taskA.priority] || 4) -
+          (priorityOrder[taskB.priority] || 4) || a.index - b.index
+      );
+    }
 
-            const difference = timeA - timeB;
+    return a.index - b.index;
+  });
 
-            return sortBy === "newest"
-                ? -difference || a.index - b.index
-                : difference || a.index - b.index;
-        }
-
-        if (sortBy === "priority") {
-
-            const priorityOrder = {
-                high: 1,
-                medium: 2,
-                low: 3
-            };
-
-            return (
-                (priorityOrder[taskA.priority] || 4) -
-                (priorityOrder[taskB.priority] || 4) ||
-                a.index - b.index
-            );
-        }
-
-        return a.index - b.index;
-
-    });
-
-    return indexedTasks.map(item => item.task);
+  return indexedTasks.map((item) => item.task);
 }
 
 // =================================
@@ -234,43 +228,40 @@ function getFilteredTasks() {
 // =================================
 
 function getTaskGroups(sortedTasks) {
+  const today = getTodayString();
+  const tomorrow = addDays(today, 1);
+  const weekEnd = getWeekEnd(today);
 
-    const today = getTodayString();
-    const tomorrow = addDays(today, 1);
-    const weekEnd = getWeekEnd(today);
+  const groups = {
+    overdue: [],
+    today: [],
+    tomorrow: [],
+    thisWeek: [],
+    future: [],
+    completed: [],
+  };
 
-    const groups = {
-        overdue: [],
-        today: [],
-        tomorrow: [],
-        thisWeek: [],
-        future: [],
-        completed: []
-    };
+  sortedTasks.forEach((task) => {
+    // Completed tasks have their own group
+    if (task.completed) {
+      groups.completed.push(task);
+      return;
+    }
 
-    sortedTasks.forEach(task => {
+    if (task.dueDate < today) {
+      groups.overdue.push(task);
+    } else if (task.dueDate === today) {
+      groups.today.push(task);
+    } else if (task.dueDate === tomorrow) {
+      groups.tomorrow.push(task);
+    } else if (task.dueDate <= weekEnd) {
+      groups.thisWeek.push(task);
+    } else {
+      groups.future.push(task);
+    }
+  });
 
-        // Completed tasks have their own group
-        if (task.completed) {
-            groups.completed.push(task);
-            return;
-        }
-
-        if (task.dueDate < today) {
-            groups.overdue.push(task);
-        } else if (task.dueDate === today) {
-            groups.today.push(task);
-        } else if (task.dueDate === tomorrow) {
-            groups.tomorrow.push(task);
-        } else if (task.dueDate <= weekEnd) {
-            groups.thisWeek.push(task);
-        } else {
-            groups.future.push(task);
-        }
-
-    });
-
-    return groups;
+  return groups;
 }
 
 // =================================
@@ -278,83 +269,74 @@ function getTaskGroups(sortedTasks) {
 // =================================
 
 function createTaskElement(task) {
+  const taskItem = document.createElement("div");
+  taskItem.className = "task-item";
 
-    const taskItem = document.createElement("div");
-    taskItem.className = "task-item";
+  if (task.completed) {
+    taskItem.classList.add("completed");
+  }
 
-    if (task.completed) {
-        taskItem.classList.add("completed");
-    }
+  // Checkbox
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.className = "task-checkbox";
+  checkbox.checked = task.completed;
 
-    // Checkbox
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.className = "task-checkbox";
-    checkbox.checked = task.completed;
+  checkbox.addEventListener("change", () => {
+    task.completed = checkbox.checked;
 
-    checkbox.addEventListener("change", () => {
+    saveTasks();
+    renderTasks();
+  });
 
-        task.completed = checkbox.checked;
+  // Task details
+  const taskDetails = document.createElement("div");
+  taskDetails.className = "task-details";
 
-        saveTasks();
-        renderTasks();
+  const title = document.createElement("h3");
+  title.textContent = task.title;
 
-    });
+  const description = document.createElement("p");
+  description.textContent = task.description;
 
-    // Task details
-    const taskDetails = document.createElement("div");
-    taskDetails.className = "task-details";
+  const meta = document.createElement("div");
+  meta.className = "task-meta";
 
-    const title = document.createElement("h3");
-    title.textContent = task.title;
+  const priority = document.createElement("span");
+  priority.className = `task-priority priority-${task.priority}`;
+  priority.textContent = `${task.priority} priority`;
 
-    const description = document.createElement("p");
-    description.textContent = task.description;
+  const date = document.createElement("span");
+  date.className = "task-priority";
+  date.textContent = task.dueDate;
 
-    const meta = document.createElement("div");
-    meta.className = "task-meta";
+  meta.append(priority, date);
 
-    const priority = document.createElement("span");
-    priority.className = `task-priority priority-${task.priority}`;
-    priority.textContent = `${task.priority} priority`;
+  taskDetails.append(title);
 
-    const date = document.createElement("span");
-    date.className = "task-priority";
-    date.textContent = task.dueDate;
+  if (task.description) {
+    taskDetails.append(description);
+  }
 
-    meta.append(priority, date);
+  taskDetails.append(meta);
 
-    taskDetails.append(title);
+  // Delete button
+  const deleteButton = document.createElement("button");
+  deleteButton.className = "delete-task-btn";
+  deleteButton.type = "button";
+  deleteButton.setAttribute("aria-label", "Delete task");
+  deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
 
-    if (task.description) {
-        taskDetails.append(description);
-    }
+  deleteButton.addEventListener("click", () => {
+    tasks = tasks.filter((item) => item.id !== task.id);
 
-    taskDetails.append(meta);
+    saveTasks();
+    renderTasks();
+  });
 
-    // Delete button
-    const deleteButton = document.createElement("button");
-    deleteButton.className = "delete-task-btn";
-    deleteButton.type = "button";
-    deleteButton.setAttribute("aria-label", "Delete task");
-    deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
+  taskItem.append(checkbox, taskDetails, deleteButton);
 
-    deleteButton.addEventListener("click", () => {
-
-        tasks = tasks.filter(item => item.id !== task.id);
-
-        saveTasks();
-        renderTasks();
-
-    });
-
-    taskItem.append(
-        checkbox,
-        taskDetails,
-        deleteButton
-    );
-
-    return taskItem;
+  return taskItem;
 }
 
 // =================================
@@ -362,83 +344,73 @@ function createTaskElement(task) {
 // =================================
 
 function renderTasks() {
+  taskList.innerHTML = "";
 
-    taskList.innerHTML = "";
+  // Get filtered and sorted tasks
+  const filteredTasks = getFilteredTasks();
 
-    // Get filtered and sorted tasks
-    const filteredTasks = getFilteredTasks();
+  // Update task count
+  taskCount.textContent =
+    filteredTasks.length === tasks.length
+      ? `${tasks.length} tasks added`
+      : `${filteredTasks.length} of ${tasks.length} tasks shown`;
 
-    // Update task count
-    taskCount.textContent = filteredTasks.length === tasks.length
-        ? `${tasks.length} tasks added`
-        : `${filteredTasks.length} of ${tasks.length} tasks shown`;
+  // Handle empty results
+  emptyTasks.style.display = filteredTasks.length === 0 ? "block" : "none";
 
-    // Handle empty results
-    emptyTasks.style.display =
-        filteredTasks.length === 0 ? "block" : "none";
+  emptyTasks.textContent =
+    tasks.length === 0
+      ? "No tasks yet. Add your first task!"
+      : "No tasks match your filters.";
 
-    emptyTasks.textContent = tasks.length === 0
-        ? "No tasks yet. Add your first task!"
-        : "No tasks match your filters.";
+  if (filteredTasks.length === 0) {
+    return;
+  }
 
-    if (filteredTasks.length === 0) {
-        return;
-    }
-
-    // No grouping
-    if (groupFilter.value === "none") {
-
-        filteredTasks.forEach(task => {
-            taskList.appendChild(createTaskElement(task));
-        });
-
-        return;
-    }
-
-    // Group tasks by date period
-    const groups = getTaskGroups(filteredTasks);
-
-    const groupInfo = [
-        { key: "overdue", title: "Overdue" },
-        { key: "today", title: "Today" },
-        { key: "tomorrow", title: "Tomorrow" },
-        { key: "thisWeek", title: "This Week" },
-        { key: "future", title: "Future" },
-        { key: "completed", title: "Completed" }
-    ];
-
-    groupInfo.forEach(group => {
-
-        const groupTasks = groups[group.key];
-
-        if (groupTasks.length === 0) {
-            return;
-        }
-
-        const groupSection = document.createElement("section");
-        groupSection.className = "task-group";
-
-        const groupTitle = document.createElement("h3");
-        groupTitle.className = "task-group-title";
-        groupTitle.textContent =
-            `${group.title} (${groupTasks.length})`;
-
-        groupSection.appendChild(groupTitle);
-
-        groupTasks.forEach(task => {
-
-            groupSection.appendChild(
-                createTaskElement(task)
-            );
-
-        });
-
-        taskList.appendChild(groupSection);
-
+  // No grouping
+  if (groupFilter.value === "none") {
+    filteredTasks.forEach((task) => {
+      taskList.appendChild(createTaskElement(task));
     });
 
-}
+    return;
+  }
 
+  // Group tasks by date period
+  const groups = getTaskGroups(filteredTasks);
+
+  const groupInfo = [
+    { key: "overdue", title: "Overdue" },
+    { key: "today", title: "Today" },
+    { key: "tomorrow", title: "Tomorrow" },
+    { key: "thisWeek", title: "This Week" },
+    { key: "future", title: "Future" },
+    { key: "completed", title: "Completed" },
+  ];
+
+  groupInfo.forEach((group) => {
+    const groupTasks = groups[group.key];
+
+    if (groupTasks.length === 0) {
+      return;
+    }
+
+    const groupSection = document.createElement("section");
+    groupSection.className = "task-group";
+
+    const groupTitle = document.createElement("h3");
+    groupTitle.className = "task-group-title";
+    groupTitle.textContent = `${group.title} (${groupTasks.length})`;
+
+    groupSection.appendChild(groupTitle);
+
+    groupTasks.forEach((task) => {
+      groupSection.appendChild(createTaskElement(task));
+    });
+
+    taskList.appendChild(groupSection);
+  });
+}
 
 // =================================
 // FILTER EVENTS
