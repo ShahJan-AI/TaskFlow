@@ -1,5 +1,4 @@
-
-   /* DARK THEME */
+/* DARK THEME */
 
 [data-theme="dark"] {
     color-scheme: dark;
@@ -14,7 +13,7 @@
 }
 
 
-   /* LIGHT THEME */
+/* LIGHT THEME */
 
 [data-theme="light"] {
     color-scheme: light;

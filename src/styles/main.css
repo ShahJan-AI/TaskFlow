@@ -1,49 +1,49 @@
    /* GLOBAL RESET */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+   * {
+       margin: 0;
+       padding: 0;
+       box-sizing: border-box;
+   }
 
 
    /* HTML & BODY */
 
-html {
-    scroll-behavior: smooth;
-}
+   html {
+       scroll-behavior: smooth;
+   }
 
-body {
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
+   body {
+       min-height: 100vh;
+       font-family: Arial, sans-serif;
+       background-color: var(--bg-color);
+       color: var(--text-color);
 
-    transition:
-        background-color var(--transition),
-        color var(--transition);
-}
+       transition:
+           background-color var(--transition),
+           color var(--transition);
+   }
 
 
    /* LINKS */
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
+   a {
+       text-decoration: none;
+       color: inherit;
+   }
 
 
    /* BUTTONS */
 
-button {
-    font: inherit;
-    cursor: pointer;
-}
+   button {
+       font: inherit;
+       cursor: pointer;
+   }
 
 
    /* IMAGES */
 
-img {
-    max-width: 100%;
-    display: block;
-}
+   img {
+       max-width: 100%;
+       display: block;
+   }

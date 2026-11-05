@@ -1,4 +1,3 @@
-
 /* =================================
    TASKS PAGE HEADER
 ================================= */
@@ -317,7 +316,7 @@
     outline: none;
 
     transition: border-color var(--transition),
-                box-shadow var(--transition);
+        box-shadow var(--transition);
 }
 
 .filter-group select:hover {
@@ -371,14 +370,12 @@
 
 /* Overdue group */
 
-.task-group:has(.task-item:not(.completed))
-.task-group-title {
+.task-group:has(.task-item:not(.completed)) .task-group-title {
     letter-spacing: 0.2px;
 }
 
 /* Completed group */
 
-.task-group:has(.task-item.completed)
-.task-group-title {
+.task-group:has(.task-item.completed) .task-group-title {
     color: var(--success-color);
 }
